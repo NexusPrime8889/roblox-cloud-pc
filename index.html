@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roblox Cloud PC</title>
+<style>
+* { box-sizing:border-box }
+body {
+  margin:0; padding:25px;
+  background:#090d1c; color:white;
+  font-family:Arial,sans-serif;
+}
+main {
+  max-width:650px; margin:30px auto;
+  background:#151d33; padding:25px;
+  border-radius:20px;
+  border:1px solid #34446b;
+}
+h1 {color:#65a9ff;text-align:center}
+p {color:#b8c8e8}
+label {display:block;margin-top:22px}
+select {
+  width:100%; padding:13px;
+  margin-top:9px; border-radius:9px;
+  background:#202d49;color:white;
+  border:1px solid #526b9b;
+}
+button {
+  width:100%;padding:16px;
+  margin-top:25px;border:0;
+  border-radius:10px;background:#287bff;
+  color:white;font-size:17px;font-weight:bold;
+  cursor:pointer;
+}
+button:hover {background:#125bd0}
+.status {
+  background:#0b1428;padding:18px;
+  margin-top:20px;border-radius:12px;
+}
+#timer {font-size:28px;color:#65ffb0}
+</style>
+</head>
+<body>
+<main>
+<h1>🎮 ROBLOX CLOUD PC</h1>
+<p style="text-align:center">Tu computadora gamer en la nube</p>
+
+<label>Memoria RAM</label>
+<select id="ram">
+<option>8 GB</option>
+<option>16 GB</option>
+<option>24 GB</option>
+<option selected>32 GB</option>
+</select>
+
+<label>Almacenamiento SSD</label>
+<select id="disk">
+<option>64 GB</option>
+<option>128 GB</option>
+<option>192 GB</option>
+<option selected>256 GB</option>
+</select>
+
+<label>Tarjeta gráfica</label>
+<select id="gpu">
+<option>GPU básica</option>
+<option>GPU gaming</option>
+<option selected>GPU potente</option>
+</select>
+
+<div class="status">
+<h3>Tu máquina virtual</h3>
+<p id="config">32 GB RAM | 256 GB SSD | GPU potente</p>
+<p>Windows 11</p>
+<p>Duración máxima: 24 horas</p>
+<div id="timer">24:00:00</div>
+<p id="state">Estado: Máquina no creada</p>
+</div>
+
+<button onclick="createPC()">🚀 CREAR MI PC</button>
+
+<script>
+let interval;
+
+function createPC() {
+  clearInterval(interval);
+
+  document.getElementById("config").textContent =
+    document.getElementById("ram").value + " RAM | " +
+    document.getElementById("disk").value + " SSD | " +
+    document.getElementById("gpu").value;
+
+  document.getElementById("state").textContent =
+    "Estado: DEMOSTRACIÓN (sin servidor conectado)";
+
+  let end = Date.now() + 24 * 60 * 60 * 1000;
+
+  function update() {
+    let seconds = Math.max(0,
+      Math.floor((end - Date.now()) / 1000));
+
+    let h = String(Math.floor(seconds / 3600)).padStart(2,"0");
+    let m = String(Math.floor(seconds % 3600 / 60)).padStart(2,"0");
+    let s = String(seconds % 60).padStart(2,"0");
+
+    document.getElementById("timer").textContent =
+      h + ":" + m + ":" + s;
+
+    if(seconds <= 0) {
+      clearInterval(interval);
+      document.getElementById("state").textContent =
+        "Estado: Tiempo terminado";
+    }
+  }
+
+  update();
+  interval = setInterval(update,1000);
+}
+</script>
+</main>
+</body>
+</html>
